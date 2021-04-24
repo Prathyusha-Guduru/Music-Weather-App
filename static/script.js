@@ -12,7 +12,8 @@ function onSucess(lat,long){
 	let status = 1
 	$.post("/", {
 		userStatus : status,
-		coord : [lat,long]
+		lat : lat,
+		long : long
 	});
 	console.log(`Status is ${status}`);
 	
@@ -20,11 +21,13 @@ function onSucess(lat,long){
 
 function onFailure(message){
 	console.log(message);
-	let status = 0
-	console.log(`if onfailure is getting executed ${status} and count is ${count}`);
+	let failed = 0
+	console.log(`if onfailure is getting executed ${failed} and `);
 	$.post("/", {
-		userStatus : status,
+		userStatus : failed,
+		lat : 0,
+		long : 0
 	});
-	console.log(`Status is ${status}`);
+	console.log(`Status is ${failed}`);
 }
 
