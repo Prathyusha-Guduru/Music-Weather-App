@@ -1,8 +1,27 @@
-from flask import Flask, json,render_template,request,redirect,url_for
-from flask.signals import template_rendered
-import requests
+#IMPORTING NECESSARY VARIABLES
+from flask import render_template,Flask,redirect,url_for,request
+import requests	
+from form import checkWeatherForm
 
-def temp_change(status):
+
+#APP CREATION AND CONFIGURATION
+app =  Flask(__name__)
+app.config['SECRET_KEY'] = "izzasecret"
+
+#VIEWS
+#homepage view
+@app.route('/',methods=['GET', 'POST'])
+def index():
+	form = checkWeatherForm()
+	if form.validate_on_submit():
+		return redirect(url_for('weather'))
+	return render_template('index.html',form = form)
+
+#weather-result page
+@app.route('/weather',methods=['GET', 'POST'])
+def weather():
+	status = request.form.get("userStatus", False)
+	print(f"Status is {status}")
 	if(status == '1'):
 		lat = request.form.get("lat", False)
 		long = request.form.get("long", False)
@@ -11,32 +30,8 @@ def temp_change(status):
 		json_data = requests.get(api_address).json()
 		print(json_data["weather"][0]["description"])
 		temp = json_data["main"]["temp"]
-		return redirect(url_for('weather'))
-	else:
-		temp = 0
-		return redirect(url_for('noaccess'))
-	return temp
 		
-
-app = Flask(__name__)
-@app.route('/',methods = ['GET','POST'])
-def index():
-	status = request.form.get("userStatus", False)
-
-	temp = temp_change(status)
-	lol = 302.7
-	i = 0
-	print(f"Temp is {temp_change(status)}")
-	return render_template('index.html',temp = temp)
-
-@app.route('/weather')
-def weather():
 	return render_template('weather.html')
 
-@app.route('/noaccess')
-def noaccess():
-	return render_template('noaccess.html')
-
-
-if __name__ == "__main__":
-	app.run(debug=True)
+if __name__ == '__main__':
+	app.run(debug = True)

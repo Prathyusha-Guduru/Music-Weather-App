@@ -8,6 +8,7 @@ navigator.geolocation.getCurrentPosition((position)=>{
 })
 
 function onSucess(lat,long){
+	
 	console.log(`Latitude is ${lat} and longitude is ${long}`);
 	let status = 1
 	$.post("/", {

@@ -9,9 +9,11 @@
 </head>
 
 <body>
-	<h2>temp is {{ temp }} {{ lol }}</h2>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="/static/script.js"></script>
+	<form method="POST">
+		{{form.hidden_tag()}}
+		{{form.submit()}}
+	</form>
+
 </body>
 
 </html>
