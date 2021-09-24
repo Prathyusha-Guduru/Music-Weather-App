@@ -9,11 +9,24 @@
 </head>
 
 <body>
-	<form method="POST">
-		{{form.hidden_tag()}}
-		{{form.submit()}}
-	</form>
 
+	<h1>Random</h1>
+	<script>
+		var random = {
+			x: 1,
+			y: 2
+		}
+		console.log(random);
+		fetch(`${window.origin}`, {
+			method: "POST",
+			credentials: "include",
+			body: JSON.stringify(random),
+			cache: "no-cache",
+			headers: new Headers({
+				"content-type": "application/json"
+			})
+		})
+	</script>
 </body>
 
 </html>
